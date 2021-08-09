@@ -50,7 +50,7 @@ else
     if [[ $MB_ML_VER == "_2_24" ]]; then
         # This is the first opportunity to distinguish between manylinuxes
         apt update
-        if [ "${MB_PYTHON_VERSION:0:4}" == "pypy" ]; then
+        if [ "${MB_PYTHON_VERSION:0:4}" == "pypy" ] || [ "${MB_PYTHON_VERSION:0:6}" == "pyston" ]; then
             # debian:9 based distro
             apt install -y wget
         fi
@@ -58,7 +58,7 @@ else
         # Need libtool, and for pypy need wget
         # centos based distro
         yum install -y libtool wget
-    elif [ "${MB_PYTHON_VERSION:0:4}" == "pypy" ]; then
+    elif [ "${MB_PYTHON_VERSION:0:4}" == "pypy" ] || [ "${MB_PYTHON_VERSION:0:6}" == "pyston" ]; then
         # centos based distro
         yum install -y wget
     fi

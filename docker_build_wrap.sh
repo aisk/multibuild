@@ -36,6 +36,9 @@ fi
 if [ "${PYTHON_VERSION:0:4}" == "pypy" ]; then
   install_pypy $PYTHON_VERSION
   export PATH=$(dirname $PYTHON_EXE):$PATH
+elif [ "${PYTHON_VERSION:0:6}" == "pyston" ]; then
+  install_pyston $PYTHON_VERSION
+  export PATH=$(dirname $PYTHON_EXE):$PATH
 else
   # Set PATH for chosen Python, Unicode width
   PYTHON_EXE=$(cpython_path $PYTHON_VERSION $UNICODE_WIDTH)/bin/python

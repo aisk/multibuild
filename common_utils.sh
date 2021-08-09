@@ -470,6 +470,32 @@ function fill_submodule {
     (cd "$repo_dir" && git remote set-url origin $origin_url)
 }
 
+function install_pyston {
+    local version=$1
+    case $version in
+        pyston_2.2)
+            pyston_download_url=https://github.com/pyston/pyston/releases/download/pyston_2.2/pyston_2.2_portable.tar.gz
+            ;;
+        pyston_2.3)
+            pyston_download_url=https://github.com/pyston/pyston/releases/download/v2.3/pyston_2.3_portable-v2.tar.gz
+            ;;
+        *)
+            echo "unknown version"
+            exit 1
+            ;;
+    esac
+
+    mkdir -p $DOWNLOADS_SDIR
+    wget -nv $pyston_download_url -P $DOWNLOADS_SDIR
+    mkdir -p "$version" && pushd "$version"
+    untar ../"$DOWNLOADS_SDIR/$(basename $pyston_download_url)"
+    popd
+    PYTHON_EXE=$(realpath "$version/pyston")
+    $PYTHON_EXE -mensurepip
+    $PYTHON_EXE -mpip install --upgrade pip setuptools wheel
+    PIP_CMD=pip
+}
+
 # The latest versions of PyPy.
 LATEST_PP_5p0=5.0.1
 LATEST_PP_5p1=5.1.1
