@@ -445,6 +445,7 @@ function install_wheel {
 }
 
 function install_run {
+    set -x
     # Depends on function `run_tests` defined in `config.sh`
     install_wheel
     mkdir tmp_for_test
